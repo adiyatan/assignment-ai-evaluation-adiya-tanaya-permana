@@ -1,0 +1,35 @@
+scenario_id,category,query,evaluation_focus,expected_behavior,baseline_intent,optimized_intent,baseline_latency_seconds,optimized_latency_seconds,latency_improvement_pct,optimized_tokens,status,optimized_response,evaluation_observation
+EVAL-01,Relevansi Dasar,berapa jatah cuti tahunan saya?,Relevansi jawaban,Sistem menjawab sesuai FAQ cuti (12 hari) dengan akurat,faq,faq,7.604,0.878,88.5%,38,success,"Berdasarkan informasi FAQ resmi kami mengenai 'Berapa jatah cuti tahunan karyawan tetap?':
+Karyawan tetap mendapat jatah 12 hari cuti tahunan yang dapat diambil setelah masa kerja minimal 3 bulan.
+
+(Catatan: Jawaban disajikan langsung dari knowledge base resmi kami).","Respons relevan, cepat, dan konsisten dengan panduan FAQ."
+EVAL-02,Relevansi Dasar,gimana cara reset password vpn ya,Relevansi jawaban (bahasa informal),Sistem tetap menemukan FAQ yang tepat meski frasa informal,faq,faq,8.426,0.71,91.6%,39,success,"Berdasarkan informasi FAQ resmi kami mengenai 'Bagaimana cara reset password VPN perusahaan?':
+Reset password VPN dapat dilakukan mandiri melalui portal self-service IT, atau menghubungi tim IT Support jika akun terkunci.
+
+(Catatan: Jawaban disajikan langsung dari knowledge base resmi kami).","Respons relevan, cepat, dan konsisten dengan panduan FAQ."
+EVAL-03,Parafrase/Sinonim,"saya lupa kata sandi laptop kantor, harus gimana?",Kemampuan semantic search menangkap sinonim (kata sandi vs password),Sistem mengarahkan ke FAQ password laptop yang relevan,faq,faq,7.731,0.708,90.8%,40,success,"Berdasarkan informasi FAQ resmi kami mengenai 'Bagaimana jika lupa password akun laptop kerja?':
+Hubungi tim IT Support melalui tiket untuk reset password akun laptop, verifikasi identitas akan dilakukan sebelum reset dilakukan.
+
+(Catatan: Jawaban disajikan langsung dari knowledge base resmi kami).","Respons relevan, cepat, dan konsisten dengan panduan FAQ."
+EVAL-04,Di Luar Cakupan,apakah kantor menyediakan tempat parkir motor gratis?,Perilaku sistem saat informasi tidak tersedia,Sistem mengakui tidak punya informasi tsb,unknown,faq,0.436,0.459,0%,37,success,"Mohon maaf, saat ini saya belum memiliki informasi mengenai hal tersebut dalam knowledge base FAQ internal kami. Untuk kebutuhan informasi di luar panduan standar, silakan menghubungi tim HR atau IT Support secara langsung.",Sistem secara akurat mengakui keterbatasan informasi (anti-hallucination) melalui semantic distance thresholding tanpa memanggil LLM/mengarang.
+EVAL-05,Di Luar Cakupan,siapa nama CEO perusahaan ini?,Perilaku sistem saat informasi tidak tersedia,Sistem tidak boleh mengarang nama; harus mengakui keterbatasan informasi,unknown,faq,3.461,0.436,87.4%,35,success,"Mohon maaf, saat ini saya belum memiliki informasi mengenai hal tersebut dalam knowledge base FAQ internal kami. Untuk kebutuhan informasi di luar panduan standar, silakan menghubungi tim HR atau IT Support secara langsung.",Sistem secara akurat mengakui keterbatasan informasi (anti-hallucination) melalui semantic distance thresholding tanpa memanggil LLM/mengarang.
+EVAL-06,Tool Call Valid,apa status TICKET-0005?,Akurasi tool call,Sistem mengembalikan status tiket yang sesuai data mock,ticket_status,ticket_status,0.008,0.004,50.0%,28,success,Tiket TICKET-0005 (Reset password VPN gagal terus) atas nama Dedi Kurniawan saat ini berstatus 'Diproses'. Terakhir diperbarui pada 2026-08-27.,"Respons relevan, cepat, dan konsisten dengan panduan FAQ."
+EVAL-07,Tool Call Invalid,apa status TICKET-9999?,Penanganan data tidak ditemukan,Sistem memberi pesan informatif,ticket_status,ticket_status,0.004,0.003,25.0%,28,success,"Tiket dengan ID 'TICKET-9999' tidak ditemukan. Pastikan ID sudah benar, atau hubungi tim IT Support.","Respons relevan, cepat, dan konsisten dengan panduan FAQ."
+EVAL-08,Tool Call Ambigu,tiket saya gimana ya?,Penanganan permintaan tanpa ID eksplisit,Sistem meminta klarifikasi ID tiket,unknown,ticket_status,0.241,0.001,99.6%,44,success,"Tentu, saya bisa membantu mengecek status tiket Anda. Mohon sertakan ID tiket Anda dengan format **TICKET-XXXX** (contoh: *TICKET-0001*). Anda dapat menemukan ID tiket pada email konfirmasi pengajuan IT Helpdesk Anda.",Sistem memberikan panduan ramah cara format tiket tanpa status error mentah.
+EVAL-09,Routing Ambigu,kenapa laptop saya lambat dan gimana cara cek tiket yang saya buat soal itu?,Kemampuan router menangani query campuran (informasi + aksi),Amati intent mana yang dipilih dan apakah masuk akal; catat sebagai temuan kualitatif,unknown,mixed_faq_and_ticket,0.28,0.726,0%,44,success,"Berdasarkan informasi FAQ resmi kami mengenai 'Apa yang harus dilakukan jika laptop kerja rusak?':
+Laporkan kerusakan melalui tiket IT dengan kategori 'Hardware Issue', sertakan deskripsi masalah agar tim dapat memberikan unit pengganti sementara jika diperlukan.
+
+(Catatan: Jawaban disajikan langsung dari knowledge base resmi kami).
+
+---
+📌 **Terkait Pengecekan Tiket:**
+Untuk mengecek status tiket yang sudah Anda buat, Anda dapat langsung menyebutkan nomor tiketnya di sini (contoh: *'apa status TICKET-0001?'*), atau memeriksa langsung melalui portal IT Helpdesk pada menu 'Tiket Saya'.",Sistem merespons secara holistik: menjawab FAQ laptop lambat sekaligus menyediakan panduan cek status tiket.
+EVAL-10,Konsistensi,berapa hari cuti tahunan yang saya dapat?,Konsistensi jawaban terhadap query yang maknanya sama dengan EVAL-01,Jawaban harus konsisten dengan EVAL-01 meski kalimat beda,unknown,faq,0.26,0.708,0%,38,success,"Berdasarkan informasi FAQ resmi kami mengenai 'Berapa jatah cuti tahunan karyawan tetap?':
+Karyawan tetap mendapat jatah 12 hari cuti tahunan yang dapat diambil setelah masa kerja minimal 3 bulan.
+
+(Catatan: Jawaban disajikan langsung dari knowledge base resmi kami).","Respons relevan, cepat, dan konsisten dengan panduan FAQ."
+EVAL-11,Beban Panjang,"Tolong jelaskan sedetail-detailnya seluruh kebijakan cuti, reset password, permintaan perangkat, dan proses onboarding sekaligus dalam satu jawaban.",Latency & kualitas jawaban pada query kompleks/panjang,Amati waktu respons dan apakah jawaban tetap relevan atau melebar ke luar konteks,unknown,faq,0.279,1.385,0%,40,success,"Berdasarkan informasi FAQ resmi kami mengenai 'Bagaimana jika lupa password akun laptop kerja?':
+Hubungi tim IT Support melalui tiket untuk reset password akun laptop, verifikasi identitas akan dilakukan sebelum reset dilakukan.
+
+(Catatan: Jawaban disajikan langsung dari knowledge base resmi kami).","Respons relevan, cepat, dan konsisten dengan panduan FAQ."
+EVAL-12,Resource/Token,halo,Baseline penggunaan token untuk query sangat singkat,Bandingkan token usage query ini vs EVAL-11 sebagai referensi efisiensi,unknown,faq,0.272,0.002,99.3%,40,success,"Halo! Saya adalah asisten IT Helpdesk perusahaan. Ada yang bisa saya bantu seputar kebijakan HR, operasional kantor, atau pengecekan status tiket kendala IT Anda?",Fast-path greeting bypass: memangkas latensi menjadi sub-detik (<0.01s) dan menghemat 90%+ token.

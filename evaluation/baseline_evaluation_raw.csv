@@ -1,0 +1,23 @@
+scenario_id,category,query,evaluation_focus,expected_behavior,baseline_intent,baseline_status,baseline_latency_seconds,approx_total_tokens,baseline_response
+EVAL-01,Relevansi Dasar,berapa jatah cuti tahunan saya?,Relevansi jawaban,Sistem menjawab sesuai FAQ cuti (12 hari) dengan akurat,faq,success,7.604,512,"Halo! 
+
+Untuk karyawan tetap, jatah cuti tahunan yang didapatkan adalah sebanyak 12 hari per tahun, yang dapat diambil setelah Anda memiliki masa kerja minimal 3 bulan.
+
+Semoga informasi ini membantu! Jika ada hal lain yang perlu ditanyakan, jangan ragu untuk menghubungi kami kembali."
+EVAL-02,Relevansi Dasar,gimana cara reset password vpn ya,Relevansi jawaban (bahasa informal),Sistem tetap menemukan FAQ yang tepat meski frasa informal,faq,success,8.426,505,"Halo! Untuk melakukan reset password VPN perusahaan, kamu bisa melakukannya secara mandiri melalui **portal self-service IT**. 
+
+Namun, jika akun kamu saat ini dalam kondisi terkunci, silakan hubungi tim **IT Support** untuk bantuan lebih lanjut ya. Semoga membantu!"
+EVAL-03,Parafrase/Sinonim,"saya lupa kata sandi laptop kantor, harus gimana?",Kemampuan semantic search menangkap sinonim (kata sandi vs password),Sistem mengarahkan ke FAQ password laptop yang relevan,faq,success,7.731,537,"Halo! Jangan khawatir, berikut adalah langkah yang bisa Anda lakukan jika lupa kata sandi laptop kantor:
+
+Anda dapat **menghubungi tim IT Support melalui tiket** untuk mengajukan permintaan reset password akun laptop Anda. Harap diperhatikan bahwa tim IT Support akan melakukan **verifikasi identitas** terlebih dahulu sebelum proses reset password dilakukan.
+
+Semoga membantu! Jika ada kendala lain, silakan beri tahu saya."
+EVAL-04,Di Luar Cakupan,apakah kantor menyediakan tempat parkir motor gratis?,Perilaku sistem saat informasi tidak tersedia,Sistem mengakui tidak punya informasi tsb,unknown,error,0.436,472,Terjadi kesalahan saat memproses permintaan Anda. Silakan coba lagi. (ClientError)
+EVAL-05,Di Luar Cakupan,siapa nama CEO perusahaan ini?,Perilaku sistem saat informasi tidak tersedia,Sistem tidak boleh mengarang nama; harus mengakui keterbatasan informasi,unknown,error,3.461,469,Terjadi kesalahan saat memproses permintaan Anda. Silakan coba lagi. (ClientError)
+EVAL-06,Tool Call Valid,apa status TICKET-0005?,Akurasi tool call,Sistem mengembalikan status tiket yang sesuai data mock,ticket_status,success,0.008,28,Tiket TICKET-0005 (Reset password VPN gagal terus) atas nama Dedi Kurniawan saat ini berstatus 'Diproses'. Terakhir diperbarui pada 2026-08-27.
+EVAL-07,Tool Call Invalid,apa status TICKET-9999?,Penanganan data tidak ditemukan,Sistem memberi pesan informatif,ticket_status,success,0.004,23,"Tiket dengan ID 'TICKET-9999' tidak ditemukan. Pastikan ID sudah benar, atau hubungi tim IT Support."
+EVAL-08,Tool Call Ambigu,tiket saya gimana ya?,Penanganan permintaan tanpa ID eksplisit,Sistem meminta klarifikasi ID tiket,unknown,error,0.241,468,Terjadi kesalahan saat memproses permintaan Anda. Silakan coba lagi. (ClientError)
+EVAL-09,Routing Ambigu,kenapa laptop saya lambat dan gimana cara cek tiket yang saya buat soal itu?,Kemampuan router menangani query campuran (informasi + aksi),Amati intent mana yang dipilih dan apakah masuk akal; catat sebagai temuan kualitatif,unknown,error,0.28,481,Terjadi kesalahan saat memproses permintaan Anda. Silakan coba lagi. (ClientError)
+EVAL-10,Konsistensi,berapa hari cuti tahunan yang saya dapat?,Konsistensi jawaban terhadap query yang maknanya sama dengan EVAL-01,Jawaban harus konsisten dengan EVAL-01 meski kalimat beda,unknown,error,0.26,472,Terjadi kesalahan saat memproses permintaan Anda. Silakan coba lagi. (ClientError)
+EVAL-11,Beban Panjang,"Tolong jelaskan sedetail-detailnya seluruh kebijakan cuti, reset password, permintaan perangkat, dan proses onboarding sekaligus dalam satu jawaban.",Latency & kualitas jawaban pada query kompleks/panjang,Amati waktu respons dan apakah jawaban tetap relevan atau melebar ke luar konteks,unknown,error,0.279,485,Terjadi kesalahan saat memproses permintaan Anda. Silakan coba lagi. (ClientError)
+EVAL-12,Resource/Token,halo,Baseline penggunaan token untuk query sangat singkat,Bandingkan token usage query ini vs EVAL-11 sebagai referensi efisiensi,unknown,error,0.272,464,Terjadi kesalahan saat memproses permintaan Anda. Silakan coba lagi. (ClientError)
